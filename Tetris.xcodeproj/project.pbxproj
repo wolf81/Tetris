@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7907302420B19E5A00FDD47B /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7907302320B19E5A00FDD47B /* UIColorExtensions.swift */; };
+		7907302720B19F4000FDD47B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7907302620B19F4000FDD47B /* Assets.xcassets */; };
+		7907302820B19F4000FDD47B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7907302620B19F4000FDD47B /* Assets.xcassets */; };
 		7924918020ADCF8000C34E1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7924917F20ADCF8000C34E1B /* AppDelegate.swift */; };
 		7924918220ADCF8000C34E1B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7924918120ADCF8000C34E1B /* GameScene.sks */; };
 		7924918620ADCF8000C34E1B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7924918520ADCF8000C34E1B /* GameScene.swift */; };
@@ -58,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7907302320B19E5A00FDD47B /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		7907302620B19F4000FDD47B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7924917C20ADCF8000C34E1B /* Tetris-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tetris-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7924917F20ADCF8000C34E1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7924918120ADCF8000C34E1B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -206,6 +211,8 @@
 				7962B77420B066A80052E783 /* BlockNode.swift */,
 				7962B77720B07FF50052E783 /* KeyState.swift */,
 				7962B77A20B092360052E783 /* TimeIntervalExtensions.swift */,
+				7907302320B19E5A00FDD47B /* UIColorExtensions.swift */,
+				7907302620B19F4000FDD47B /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -339,6 +346,7 @@
 				7924918220ADCF8000C34E1B /* GameScene.sks in Resources */,
 				7924918D20ADCF8200C34E1B /* Assets.xcassets in Resources */,
 				7924919020ADCF8200C34E1B /* LaunchScreen.storyboard in Resources */,
+				7907302720B19F4000FDD47B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +363,7 @@
 			files = (
 				792491B220ADD14B00C34E1B /* GameScene.sks in Resources */,
 				792491BA20ADD14B00C34E1B /* Assets.xcassets in Resources */,
+				7907302820B19F4000FDD47B /* Assets.xcassets in Resources */,
 				792491BD20ADD14B00C34E1B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +385,7 @@
 				7962B77520B066A80052E783 /* BlockNode.swift in Sources */,
 				7924918620ADCF8000C34E1B /* GameScene.swift in Sources */,
 				7962B77820B07FF50052E783 /* KeyState.swift in Sources */,
+				7907302420B19E5A00FDD47B /* UIColorExtensions.swift in Sources */,
 				7924918820ADCF8000C34E1B /* GameViewController.swift in Sources */,
 				7962B76020ADD2B30052E783 /* Tetromino.swift in Sources */,
 				7924918020ADCF8000C34E1B /* AppDelegate.swift in Sources */,

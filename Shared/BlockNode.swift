@@ -14,14 +14,7 @@ class BlockNode : SKSpriteNode {
         let texture = SKTexture(imageNamed: "block")
         super.init(texture: texture, color: color, size: BlockNode.size)        
         self.colorBlendFactor = 1.0
-        
-        #if os(iOS)
-        var a: CGFloat = 0
-        color.getRed(nil, green: nil, blue: nil, alpha: &a)
-        self.alpha = a
-        #elseif os(macOS)
         self.alpha = color.alphaComponent
-        #endif
     }
     
     required init?(coder aDecoder: NSCoder) {
