@@ -31,11 +31,9 @@ class GameScene: SKScene {
     }
     
     func touchUp(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.red
-//            self.addChild(n)
-//        }
+        if Game.shared.state == .none {
+            Game.shared.start()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -54,7 +52,6 @@ class GameScene: SKScene {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    
     var lastTime: TimeInterval = 0.0
     
     override func update(_ currentTime: TimeInterval) {
@@ -63,29 +60,73 @@ class GameScene: SKScene {
         }
         
         var accumulatedFrames = round((currentTime - self.lastTime) * 60)
+        let deltaTime = currentTime - self.lastTime
         self.lastTime = currentTime
         
         while accumulatedFrames > 0 {
-            Game.shared.update()
+            Game.shared.update(deltaTime: deltaTime)
             accumulatedFrames -= 1
         }
         
-        let originX = self.size.width - Game.shared.board.width
-        let originY = self.size.height - Game.shared.board.height
+        render()
+    }
+    
+    private func render() {
+        let blockSize = BlockNode.size
+        
+        let visibleHeight = Game.shared.board.height - 2
+        
+        let originX = (self.size.width - (CGFloat(Game.shared.board.width) * blockSize.width)) / 2 + (blockSize.width / 2)
+        let originY = (self.size.height - (CGFloat(visibleHeight) * blockSize.height)) / 2 + (blockSize.height / 2)
         
         self.removeAllChildren()
         
-        for y in (0 ..< Game.shared.board.height) {
-            for x in (0 ..< Game.shared.board.height) {
-                let node = BlockNode(color: SKColor.lightGray)
+        for y in (0 ..< visibleHeight) {
+            for x in (0 ..< Game.shared.board.width) {
+                let v = Game.shared.board[x, y]
+                let color = colorForBoardValue(v)
+                let node = BlockNode(color: color)
                 
-                let xPos = originX
-                let yPos = originY
+                let xPos = originX + CGFloat(x) * blockSize.width
+                let yPos = originY + CGFloat(y) * blockSize.height
+                
+                node.position = CGPoint(x: xPos, y: yPos)
+                addChild(node)
+            }
+        }
+        
+        let dim = Game.shared.spawnedPiece.dimension
+        let pieceX = originX + Game.shared.spawnedPieceLocation.x * blockSize.width
+        let pieceY = originY + Game.shared.spawnedPieceLocation.y * blockSize.height
+        
+        for y in (0 ..< dim) {
+            for x in (0 ..< dim) {
+                if Game.shared.spawnedPiece[x, y] != 0 {
+                    let color = colorForBoardValue(Game.shared.spawnedPiece.type.rawValue)
+                    let node = BlockNode(color: color)
+                    
+                    if Int(Game.shared.spawnedPieceLocation.y) + y >= visibleHeight {
+                        continue
+                    }
+                    
+                    node.position = CGPoint(x: pieceX + (CGFloat(x) * blockSize.width),
+                                            y: pieceY + (CGFloat(y) * blockSize.height))
+                    addChild(node)
+                }
             }
         }
     }
     
-    func blockWithColor(_ color: SKColor, size: CGSize) -> SKSpriteNode {
-        return SKSpriteNode(color: color, size: size)
+    private func colorForBoardValue(_ value: Int) -> SKColor {
+        switch value {
+        case TetrominoType.I.rawValue: return SKColor.orange
+        case TetrominoType.J.rawValue: return SKColor.red
+        case TetrominoType.L.rawValue: return SKColor.purple
+        case TetrominoType.O.rawValue: return SKColor.blue
+        case TetrominoType.S.rawValue: return SKColor.yellow
+        case TetrominoType.T.rawValue: return SKColor.green
+        case TetrominoType.Z.rawValue: return SKColor.cyan
+        default: return SKColor.white.withAlphaComponent(0.5)
+        }
     }
 }
