@@ -21,7 +21,5 @@ class BlockNode : SKSpriteNode {
         fatalError()
     }
     
-    static var size: CGSize {
-        return CGSize(width: 32, height: 32)
-    }
+    static var size: CGSize = CGSize(width: 32, height: 32)
 }

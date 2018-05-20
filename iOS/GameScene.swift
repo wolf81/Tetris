@@ -10,16 +10,47 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    private var rootNode: SKSpriteNode!
+    private var leftButtonNode: SKSpriteNode!
+    private var rightButtonNode: SKSpriteNode!
+    private var aButtonNode: SKSpriteNode!
+    private var bButtonNode: SKSpriteNode!
+    
+    private var buttonNodes: [SKSpriteNode] {
+        return [self.leftButtonNode, self.rightButtonNode, self.aButtonNode, self.bButtonNode]
+    }
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        
+        self.scaleMode = .aspectFit
+        BlockNode.size = CGSize(width: 48, height: 48)
+        
+        self.leftButtonNode = self.childNode(withName: "leftButton") as! SKSpriteNode
+        self.rightButtonNode = self.childNode(withName: "rightButton") as! SKSpriteNode
+        self.aButtonNode = self.childNode(withName: "aButton") as! SKSpriteNode
+        self.bButtonNode = self.childNode(withName: "bButton") as! SKSpriteNode
+     
+        let buttonHeight: CGFloat = 100
+        self.rootNode = SKSpriteNode(color: SKColor.white, size: CGSize(width: self.frame.width, height: self.frame.height - buttonHeight))
+        self.rootNode.position = CGPoint(x: self.position.x, y: self.position.y + buttonHeight / 2)
+        addChild(self.rootNode)
+        
+        self.buttonNodes.forEach { (node) in
+            node.zPosition = 1000
+        }
     }
     
     func touchDown(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.green
-//            self.addChild(n)
-//        }
+        if self.bButtonNode.frame.contains(pos) {
+            Game.shared.keyState.insert(.up)
+        } else if self.aButtonNode.contains(pos) {
+            Game.shared.keyState.insert(.down)
+        } else if self.leftButtonNode.contains(pos) {
+            Game.shared.keyState.insert(.left)
+        } else if self.rightButtonNode.contains(pos) {
+            Game.shared.keyState.insert(.right)
+        }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -33,6 +64,16 @@ class GameScene: SKScene {
     func touchUp(atPoint pos : CGPoint) {
         if Game.shared.state == .none {
             Game.shared.start()
+        } else {
+            if self.bButtonNode.frame.contains(pos) {
+                Game.shared.keyState.remove(.up)
+            } else if self.aButtonNode.contains(pos) {
+                Game.shared.keyState.remove(.down)
+            } else if self.leftButtonNode.contains(pos) {
+                Game.shared.keyState.remove(.left)
+            } else if self.rightButtonNode.contains(pos) {
+                Game.shared.keyState.remove(.right)
+            }
         }
     }
     
@@ -79,7 +120,7 @@ class GameScene: SKScene {
         let originX = (self.size.width - (CGFloat(Game.shared.board.width) * blockSize.width)) / 2 + (blockSize.width / 2)
         let originY = (self.size.height - (CGFloat(visibleHeight) * blockSize.height)) / 2 + (blockSize.height / 2)
         
-        self.removeAllChildren()
+        self.rootNode.removeAllChildren()
         
         for y in (0 ..< visibleHeight) {
             for x in (0 ..< Game.shared.board.width) {
@@ -91,7 +132,7 @@ class GameScene: SKScene {
                 let yPos = originY + CGFloat(y) * blockSize.height
                 
                 node.position = CGPoint(x: xPos, y: yPos)
-                addChild(node)
+                self.rootNode.addChild(node)
             }
         }
         
@@ -111,7 +152,7 @@ class GameScene: SKScene {
                     
                     node.position = CGPoint(x: pieceX + (CGFloat(x) * blockSize.width),
                                             y: pieceY + (CGFloat(y) * blockSize.height))
-                    addChild(node)
+                    self.rootNode.addChild(node)
                 }
             }
         }
