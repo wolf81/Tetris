@@ -7,48 +7,37 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#endif
 import SpriteKit
 
 extension SKTexture {
-    convenience init(radialGradientWithColors colors: [UIColor], locations: [CGFloat], size: CGSize) {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { (context) in
-            let colorSpace = context.cgContext.colorSpace ?? CGColorSpaceCreateDeviceRGB()
-            let cgColors = colors.map({ $0.cgColor }) as CFArray
-            guard let gradient = CGGradient(colorsSpace: colorSpace, colors: cgColors, locations: UnsafePointer<CGFloat>(locations)) else {
-                fatalError("Failed creating gradient.")
-            }
-            
-            let radius = max(size.width, size.height) / 2.0
-            let midPoint = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
-            context.cgContext.drawRadialGradient(gradient, startCenter: midPoint, startRadius: 0, endCenter: midPoint, endRadius: radius, options: [])
+    convenience init?(gradientWithTopColor topColor: CIColor, bottomColor: CIColor, size: CGSize) {
+        let context = CIContext(options: nil)
+        
+        guard let gradientFilter = CIFilter(name: "CILinearGradient") else {
+            return nil
         }
         
-        self.init(image: image)
-    }
-    
-    
-    convenience init(linearGradientWithAngle angleInRadians: CGFloat, colors: [UIColor], locations: [CGFloat], size: CGSize) {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { (context) in
-            let colorSpace = context.cgContext.colorSpace ?? CGColorSpaceCreateDeviceRGB()
-            let cgColors = colors.map({ $0.cgColor }) as CFArray
-            guard let gradient = CGGradient(colorsSpace: colorSpace, colors: cgColors, locations: UnsafePointer<CGFloat>(locations)) else {
-                fatalError("Failed creating gradient.")
-            }
-            
-            let angles = [angleInRadians + .pi, angleInRadians]
-            let radius = (pow(size.width / 2.0, 2.0) + pow(size.height / 2.0, 2.0)).squareRoot()
-            let points = angles.map { (angle) -> CGPoint in
-                let dx = radius * cos(-angle) + size.width / 2.0
-                let dy = radius * sin(-angle) + size.height / 2.0
-                return CGPoint(x: dx, y: dy)
-            }
-            
-            context.cgContext.drawLinearGradient(gradient, start: points[0], end: points[1], options: [])
+        gradientFilter.setDefaults()
+        let startVector = CIVector(x: size.width / 2, y: 0)
+        let endVector = CIVector(x: size.width / 2, y: size.height)
+        gradientFilter.setValue(startVector, forKey: "inputPoint0")
+        gradientFilter.setValue(endVector, forKey: "inputPoint1")
+        gradientFilter.setValue(topColor, forKey: "inputColor0")
+        gradientFilter.setValue(bottomColor, forKey: "inputColor1")
+        
+        guard
+            let outputImage = gradientFilter.outputImage,
+            let imageRef = context.createCGImage(outputImage, from: CGRect(x: 0, y: 0, width: size.width, height: size.height)) else {
+            return nil
         }
         
-        self.init(image: image)
-    }
+        #if os(iOS)
+        self.init(image: UIImage(cgImage: imageRef))
+        #else
+        self.init(image: NSImage(cgImage: imageRef, size: size))
+        #endif
+    }    
 }
