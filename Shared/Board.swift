@@ -41,7 +41,9 @@ class Board {
                            count: Board.height)
     }
     
-    func removeCompleteLines() {
+    func removeCompleteLines() -> Int {
+        var lineCount = 0
+        
         for var y in (0 ..< self.height).reversed() {
             var isComplete = true
             
@@ -52,6 +54,8 @@ class Board {
             }
             
             if isComplete {
+                lineCount += 1
+                
                 for yc in (y ..< (self.height - 1)) {
                     for x in (0 ..< self.width) {
                         self[x, yc] = self[x, yc + 1]
@@ -61,6 +65,8 @@ class Board {
                 y += 1
             }
         }
+        
+        return lineCount
     }
 }
 
