@@ -10,8 +10,20 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    private var backgroundNode: SKSpriteNode!
+    
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        
+        self.backgroundNode = self.childNode(withName: "backgroundNode") as! SKSpriteNode
+        self.backgroundNode.size = self.size
+
+        let topColor = CIColor(red: 61.0 / 255, green: 74.0 / 255, blue: 103.0 / 255, alpha: 1.0)
+        let botColor = CIColor(red: 76.0 / 255, green: 108.0 / 255, blue: 181.0 / 255, alpha: 1.0)
+        let bgTexture = SKTexture(gradientWithTopColor: topColor, bottomColor: botColor, size: self.size)
+        self.backgroundNode.texture = bgTexture
+        self.backgroundNode.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.backgroundNode.zPosition = -1000
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -87,18 +99,30 @@ class GameScene: SKScene {
         let originX = (self.size.width - (CGFloat(Game.shared.board.width) * blockSize.width)) / 2 + (blockSize.width / 2)
         let originY = (self.size.height - (CGFloat(visibleHeight) * blockSize.height)) / 2 + (blockSize.height / 2)
         
-        self.removeAllChildren()
+        for child in self.children {
+            if child.name != "backgroundNode" {
+                child.removeFromParent()
+            }
+        }
         
         for y in (0 ..< visibleHeight) {
             for x in (0 ..< Game.shared.board.width) {
                 let v = Game.shared.board[x, y]
-                let color = colorForBoardValue(v)
-                let node = BlockNode(color: color)
+                var node: BlockNode
+                
+                if v == 0 {
+                    let color = colorForBoardValue(v)
+                    node = BlockNode(color: color)
+                } else {
+                    let type = TetrominoType(rawValue: v)
+                    node = BlockNode(texture: type!.texture)
+                }
                 
                 let xPos = originX + CGFloat(x) * blockSize.width
                 let yPos = originY + CGFloat(y) * blockSize.height
                 
                 node.position = CGPoint(x: xPos, y: yPos)
+                node.zPosition = 1
                 addChild(node)
             }
         }
@@ -110,8 +134,11 @@ class GameScene: SKScene {
         for y in (0 ..< dim) {
             for x in (0 ..< dim) {
                 if Game.shared.spawnedPiece[x, y] != 0 {
-                    let color = colorForBoardValue(Game.shared.spawnedPiece.type.rawValue)
-                    let node = BlockNode(color: color)
+                    var node: BlockNode
+                    
+                    let type = TetrominoType(rawValue: Game.shared.spawnedPiece.type.rawValue)
+                    node = BlockNode(texture: type!.texture)
+                    node.zPosition = 1000
                     
                     if Int(Game.shared.spawnedPieceLocation.y) + y >= visibleHeight {
                         continue
@@ -120,6 +147,7 @@ class GameScene: SKScene {
                     node.position = CGPoint(x: pieceX + (CGFloat(x) * blockSize.width),
                                             y: pieceY + (CGFloat(y) * blockSize.height))
                     addChild(node)
+                    node.zPosition = 1
                 }
             }
         }

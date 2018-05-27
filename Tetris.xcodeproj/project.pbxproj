@@ -27,8 +27,6 @@
 		792491C920ADD14C00C34E1B /* Tetris_macOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792491C820ADD14C00C34E1B /* Tetris_macOSTests.swift */; };
 		7962B76020ADD2B30052E783 /* Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B75F20ADD2B30052E783 /* Tetromino.swift */; };
 		7962B76120ADD2B30052E783 /* Tetromino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B75F20ADD2B30052E783 /* Tetromino.swift */; };
-		7962B76320AE9EE40052E783 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B76220AE9EE40052E783 /* Constants.swift */; };
-		7962B76420AE9EE40052E783 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B76220AE9EE40052E783 /* Constants.swift */; };
 		7962B76920AEA05A0052E783 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B76820AEA05A0052E783 /* Game.swift */; };
 		7962B76A20AEA05A0052E783 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B76820AEA05A0052E783 /* Game.swift */; };
 		7962B76F20AF3E6E0052E783 /* PlaceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B76E20AF3E6E0052E783 /* PlaceState.swift */; };
@@ -41,6 +39,8 @@
 		7962B77920B07FF50052E783 /* KeyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B77720B07FF50052E783 /* KeyState.swift */; };
 		7962B77B20B092360052E783 /* TimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B77A20B092360052E783 /* TimeIntervalExtensions.swift */; };
 		7962B77C20B092360052E783 /* TimeIntervalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7962B77A20B092360052E783 /* TimeIntervalExtensions.swift */; };
+		79672DA620B4710E00B26F7C /* SKTextureExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79672DA520B4710E00B26F7C /* SKTextureExtensions.swift */; };
+		79672DA720B4710E00B26F7C /* SKTextureExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79672DA520B4710E00B26F7C /* SKTextureExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,13 +88,13 @@
 		792491C820ADD14C00C34E1B /* Tetris_macOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tetris_macOSTests.swift; sourceTree = "<group>"; };
 		792491CA20ADD14C00C34E1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7962B75F20ADD2B30052E783 /* Tetromino.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tetromino.swift; sourceTree = "<group>"; };
-		7962B76220AE9EE40052E783 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7962B76820AEA05A0052E783 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		7962B76E20AF3E6E0052E783 /* PlaceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceState.swift; sourceTree = "<group>"; };
 		7962B77120B040A70052E783 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		7962B77420B066A80052E783 /* BlockNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockNode.swift; sourceTree = "<group>"; };
 		7962B77720B07FF50052E783 /* KeyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyState.swift; sourceTree = "<group>"; };
 		7962B77A20B092360052E783 /* TimeIntervalExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtensions.swift; sourceTree = "<group>"; };
+		79672DA520B4710E00B26F7C /* SKTextureExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTextureExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,7 +203,6 @@
 		7962B75E20ADD2A20052E783 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				7962B76220AE9EE40052E783 /* Constants.swift */,
 				7962B77120B040A70052E783 /* Board.swift */,
 				7962B75F20ADD2B30052E783 /* Tetromino.swift */,
 				7962B76E20AF3E6E0052E783 /* PlaceState.swift */,
@@ -213,6 +212,7 @@
 				7962B77A20B092360052E783 /* TimeIntervalExtensions.swift */,
 				7907302320B19E5A00FDD47B /* UIColorExtensions.swift */,
 				7907302620B19F4000FDD47B /* Assets.xcassets */,
+				79672DA520B4710E00B26F7C /* SKTextureExtensions.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -385,11 +385,11 @@
 				7962B77520B066A80052E783 /* BlockNode.swift in Sources */,
 				7924918620ADCF8000C34E1B /* GameScene.swift in Sources */,
 				7962B77820B07FF50052E783 /* KeyState.swift in Sources */,
+				79672DA620B4710E00B26F7C /* SKTextureExtensions.swift in Sources */,
 				7907302420B19E5A00FDD47B /* UIColorExtensions.swift in Sources */,
 				7924918820ADCF8000C34E1B /* GameViewController.swift in Sources */,
 				7962B76020ADD2B30052E783 /* Tetromino.swift in Sources */,
 				7924918020ADCF8000C34E1B /* AppDelegate.swift in Sources */,
-				7962B76320AE9EE40052E783 /* Constants.swift in Sources */,
 				7962B76F20AF3E6E0052E783 /* PlaceState.swift in Sources */,
 				7962B77B20B092360052E783 /* TimeIntervalExtensions.swift in Sources */,
 				7962B77220B040A70052E783 /* Board.swift in Sources */,
@@ -410,7 +410,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7962B77620B066A80052E783 /* BlockNode.swift in Sources */,
-				7962B76420AE9EE40052E783 /* Constants.swift in Sources */,
 				7962B77920B07FF50052E783 /* KeyState.swift in Sources */,
 				7962B76120ADD2B30052E783 /* Tetromino.swift in Sources */,
 				7962B76A20AEA05A0052E783 /* Game.swift in Sources */,
@@ -420,6 +419,7 @@
 				7962B77C20B092360052E783 /* TimeIntervalExtensions.swift in Sources */,
 				7962B77320B040A70052E783 /* Board.swift in Sources */,
 				792491B020ADD14B00C34E1B /* AppDelegate.swift in Sources */,
+				79672DA720B4710E00B26F7C /* SKTextureExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
