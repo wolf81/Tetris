@@ -28,6 +28,18 @@ enum TetrominoType: Int {
         let idx = arc4random_uniform(UInt32(types.count))
         return types[Int(idx)]
     }
+    
+    var texture: SKTexture {
+        switch self {
+        case .I: return SKTexture(imageNamed: "square_blue")
+        case .J: return SKTexture(imageNamed: "square_green")
+        case .L: return SKTexture(imageNamed: "square_orange")
+        case .O: return SKTexture(imageNamed: "square_yellow")
+        case .S: return SKTexture(imageNamed: "square_purple")
+        case .T: return SKTexture(imageNamed: "square_red")
+        case .Z: return SKTexture(imageNamed: "square_pink")
+        }
+    }
 }
 
 class Tetromino {
