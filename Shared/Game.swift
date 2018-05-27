@@ -17,6 +17,10 @@ enum GameState {
 class Game {
     static let shared = Game()
     
+    private(set) var removedRowCount: Int = 0
+
+    private let stepTimeMs = 300
+    
     private(set) var board: Board
     private(set) var spawnedPiece: Tetromino
     private(set) var spawnedPieceLocation: CGPoint
@@ -40,7 +44,9 @@ class Game {
     func start() {
         self.board.reset()
         
+        self.removedRowCount = 0
         self.state = .running
+        self.keyState = []
     }
     
     func finish() {
@@ -87,12 +93,12 @@ class Game {
             }
             
             if self.keyState.contains(.down) {
-                self.elapsedTimeMs += Constants.stepTimeMs + 1
+                self.elapsedTimeMs += self.stepTimeMs + 1
                 self.keyboardElapsedTimeMs = 175
-            }
+            }            
         }
 
-        if self.elapsedTimeMs > Constants.stepTimeMs {
+        if self.elapsedTimeMs > self.stepTimeMs {
             var newSpawnedPieceLocation = self.spawnedPieceLocation
             newSpawnedPieceLocation.y -= 1
             
@@ -169,6 +175,6 @@ class Game {
             }
         }
         
-        board.removeCompleteLines()
+        self.removedRowCount += board.removeCompleteLines()
     }
 }
