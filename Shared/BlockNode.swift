@@ -10,11 +10,12 @@ import Foundation
 import SpriteKit
 
 class BlockNode : SKSpriteNode {
+    init(texture: SKTexture) {
+        super.init(texture: texture, color: SKColor.white, size: BlockNode.size)
+    }
+    
     init(color: SKColor) {
-        let texture = SKTexture(imageNamed: "block")
-        super.init(texture: texture, color: color, size: BlockNode.size)        
-        self.colorBlendFactor = 1.0
-        self.alpha = color.alphaComponent
+        super.init(texture: nil, color: color, size: BlockNode.size)
     }
     
     required init?(coder aDecoder: NSCoder) {
